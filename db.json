@@ -1,0 +1,299 @@
+{
+  "users": [
+    {
+      "id": "admin-1",
+      "name": "Admin User",
+      "email": "admin@greenfield.edu",
+      "passwordHash": "$2b$10$vEY9.6tJMixp9ubEeWXLUuI6ukPShqZ6rRaH1VpSQz.wHE3oF.xr.",
+      "role": "admin",
+      "phone": "9999999999"
+    },
+    {
+      "id": "student-1",
+      "name": "Test Student",
+      "email": "student@greenfield.edu",
+      "passwordHash": "$2b$10$8Zis3YwSksVLY80YIJHgcuE/SzyJzqZGrNhN0yA4oMViXNin0Y.v2",
+      "role": "student",
+      "phone": "8888888888"
+    }
+  ],
+  "books": [
+    {
+      "id": "lpjohvD04aWe6zQFC0A31",
+      "title": "Data Structures & Algorithms in Java",
+      "authors": [
+        "Robert Lafore"
+      ],
+      "subjects": [
+        "computer science",
+        "dsa"
+      ],
+      "isbn": "978-0-123456-47-2",
+      "copiesTotal": 5,
+      "copiesAvailable": 2,
+      "coverUrl": "",
+      "ebookKey": null
+    },
+    {
+      "id": "v-oRLyz3qMKhLtoM6B4T2",
+      "title": "Introduction to Electrical Engineering",
+      "authors": [
+        "John Doe"
+      ],
+      "subjects": [
+        "electrical engineering"
+      ],
+      "isbn": "978-0-987654-32-1",
+      "copiesTotal": 3,
+      "copiesAvailable": 0,
+      "coverUrl": "",
+      "ebookKey": null
+    },
+    {
+      "id": "bgzTXRfNjLpGAWYsvfHVB",
+      "title": "Cloud Computing Essentials",
+      "authors": [
+        "Jane Smith"
+      ],
+      "subjects": [
+        "cloud computing"
+      ],
+      "isbn": "978-0-111111-11-1",
+      "copiesTotal": 2,
+      "copiesAvailable": 0,
+      "coverUrl": "",
+      "ebookKey": null
+    },
+    {
+      "id": "j9BvuOfbtd7m-O9Ga4TO7",
+      "title": "atomic habits",
+      "authors": [],
+      "subjects": [],
+      "isbn": null,
+      "copiesTotal": 10,
+      "copiesAvailable": 9,
+      "coverUrl": "",
+      "ebookKey": null
+    },
+    {
+      "id": "ipvPkdRAtc9wpg8RDSThQ",
+      "title": "operating system",
+      "authors": [
+        "silberschatz"
+      ],
+      "subjects": [
+        "cs",
+        "os"
+      ],
+      "isbn": "978-1118063330",
+      "copiesTotal": 4,
+      "copiesAvailable": 4,
+      "coverUrl": "",
+      "ebookKey": null
+    },
+    {
+      "id": "tiUPb8fovmfbolpYTbm6f",
+      "title": "oswald",
+      "authors": [
+        "harsha"
+      ],
+      "subjects": [
+        "computers"
+      ],
+      "isbn": "AB23-27389137",
+      "copiesTotal": 10,
+      "copiesAvailable": 10,
+      "coverUrl": "",
+      "ebookKey": null
+    }
+  ],
+  "requests": [
+    {
+      "id": "yp_zYdqXRbW_X4ilZCwdW",
+      "bookId": "lpjohvD04aWe6zQFC0A31",
+      "userId": "student-1",
+      "status": "approved",
+      "requestedAt": "2026-02-19T13:06:06.842Z",
+      "updatedAt": "2026-02-19T13:12:05.588Z",
+      "dueDate": null
+    },
+    {
+      "id": "tmUIIkmVr3nSTshLFZe4D",
+      "bookId": "v-oRLyz3qMKhLtoM6B4T2",
+      "userId": "student-1",
+      "status": "approved",
+      "requestedAt": "2026-02-19T13:25:17.447Z",
+      "updatedAt": "2026-02-19T16:04:09.936Z",
+      "dueDate": null
+    },
+    {
+      "id": "YLIzstpUaU2nIfcAr28NK",
+      "bookId": "bgzTXRfNjLpGAWYsvfHVB",
+      "userId": "student-1",
+      "status": "approved",
+      "requestedAt": "2026-02-19T13:30:12.200Z",
+      "updatedAt": "2026-02-19T16:04:11.449Z",
+      "dueDate": null
+    },
+    {
+      "id": "0ixrqgxSKTg-MVFMKPsPd",
+      "bookId": "bgzTXRfNjLpGAWYsvfHVB",
+      "userId": "student-1",
+      "status": "approved",
+      "requestedAt": "2026-02-19T15:56:04.379Z",
+      "updatedAt": "2026-02-19T16:04:12.777Z",
+      "dueDate": null
+    },
+    {
+      "id": "o0D8R9zUSCJ2B1ES-wTMi",
+      "bookId": "bgzTXRfNjLpGAWYsvfHVB",
+      "userId": "student-1",
+      "status": "pending",
+      "requestedAt": "2026-02-19T15:59:26.960Z",
+      "updatedAt": "2026-02-19T15:59:26.960Z",
+      "dueDate": null
+    },
+    {
+      "id": "-qEUA_60Vf-3tqhB4KJOy",
+      "bookId": "j9BvuOfbtd7m-O9Ga4TO7",
+      "userId": "student-1",
+      "status": "approved",
+      "requestedAt": "2026-02-19T16:10:16.120Z",
+      "updatedAt": "2026-02-19T16:10:37.377Z",
+      "dueDate": null
+    }
+  ],
+  "audits": [
+    {
+      "id": "C1Y_vmLh25zWPX_QTzR7F",
+      "type": "request_created",
+      "by": "student-1",
+      "at": "2026-02-19T13:06:06.842Z",
+      "meta": {
+        "requestId": "yp_zYdqXRbW_X4ilZCwdW"
+      }
+    },
+    {
+      "id": "6ywoxwDCporgpxtE7YbuD",
+      "type": "request_update",
+      "by": "admin-1",
+      "at": "2026-02-19T13:12:05.588Z",
+      "meta": {
+        "requestId": "yp_zYdqXRbW_X4ilZCwdW",
+        "status": "approved"
+      }
+    },
+    {
+      "id": "9InOa3TGUC7A5yddLqs9S",
+      "type": "request_created",
+      "by": "student-1",
+      "at": "2026-02-19T13:25:17.447Z",
+      "meta": {
+        "requestId": "tmUIIkmVr3nSTshLFZe4D"
+      }
+    },
+    {
+      "id": "PgCCOQnYcJfKJoQt7P3yq",
+      "type": "request_created",
+      "by": "student-1",
+      "at": "2026-02-19T13:30:12.200Z",
+      "meta": {
+        "requestId": "YLIzstpUaU2nIfcAr28NK"
+      }
+    },
+    {
+      "id": "OPGCUg6UrXNf1L_6gdEwG",
+      "type": "request_created",
+      "by": "student-1",
+      "at": "2026-02-19T15:56:04.379Z",
+      "meta": {
+        "requestId": "0ixrqgxSKTg-MVFMKPsPd"
+      }
+    },
+    {
+      "id": "XkGp3M8RStOIcxBtvFSkh",
+      "type": "request_created",
+      "by": "student-1",
+      "at": "2026-02-19T15:59:26.960Z",
+      "meta": {
+        "requestId": "o0D8R9zUSCJ2B1ES-wTMi"
+      }
+    },
+    {
+      "id": "hBqS5beMlF1F2qXXkNXsU",
+      "type": "request_update",
+      "by": "admin-1",
+      "at": "2026-02-19T16:04:09.936Z",
+      "meta": {
+        "requestId": "tmUIIkmVr3nSTshLFZe4D",
+        "status": "approved"
+      }
+    },
+    {
+      "id": "8fAKt5UmzHszxatT3fSVc",
+      "type": "request_update",
+      "by": "admin-1",
+      "at": "2026-02-19T16:04:11.449Z",
+      "meta": {
+        "requestId": "YLIzstpUaU2nIfcAr28NK",
+        "status": "approved"
+      }
+    },
+    {
+      "id": "GE92LJmXsceS2-N4VevYP",
+      "type": "request_update",
+      "by": "admin-1",
+      "at": "2026-02-19T16:04:12.777Z",
+      "meta": {
+        "requestId": "0ixrqgxSKTg-MVFMKPsPd",
+        "status": "approved"
+      }
+    },
+    {
+      "id": "SlqO2l7SUTyUO3QPzLdTY",
+      "type": "book_create",
+      "by": "admin-1",
+      "at": "2026-02-19T16:09:41.882Z",
+      "meta": {
+        "bookId": "j9BvuOfbtd7m-O9Ga4TO7"
+      }
+    },
+    {
+      "id": "Bf3jhvb283GCYoZSf-x2l",
+      "type": "request_created",
+      "by": "student-1",
+      "at": "2026-02-19T16:10:16.120Z",
+      "meta": {
+        "requestId": "-qEUA_60Vf-3tqhB4KJOy"
+      }
+    },
+    {
+      "id": "zJlpeNfwyuvAb3ifaFnP5",
+      "type": "request_update",
+      "by": "admin-1",
+      "at": "2026-02-19T16:10:37.377Z",
+      "meta": {
+        "requestId": "-qEUA_60Vf-3tqhB4KJOy",
+        "status": "approved"
+      }
+    },
+    {
+      "id": "V0G5Cl0Kf_5PIa-tgngPA",
+      "type": "book_create",
+      "by": "admin-1",
+      "at": "2026-02-19T16:25:35.368Z",
+      "meta": {
+        "bookId": "ipvPkdRAtc9wpg8RDSThQ"
+      }
+    },
+    {
+      "id": "6x6I5Sbee0lxQNjUutCiE",
+      "type": "book_create",
+      "by": "admin-1",
+      "at": "2026-02-21T13:01:09.864Z",
+      "meta": {
+        "bookId": "tiUPb8fovmfbolpYTbm6f"
+      }
+    }
+  ]
+}

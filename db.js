@@ -1,26 +1,19 @@
-// db.js - lowdb setup (FIXED VERSION)
-const { Low } = require('lowdb')
-const { JSONFile } = require('lowdb/node')
-const path = require('path')
+// db.js - lowdb setup (v1 CommonJS)
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
+const path = require('path');
 
-const file = path.join(__dirname, 'db.json')
-const adapter = new JSONFile(file)
+const file = path.join(__dirname, 'db.json');
+const adapter = new FileSync(file);
+const db = low(adapter);
 
 // ✅ Provide default structure (IMPORTANT)
-const defaultData = {
+db.defaults({
     users: [],
     books: [],
     requests: [],
     audits: []
-}
+}).write();
 
-const db = new Low(adapter, defaultData)
+module.exports = db;
 
-async function initDB() {
-    await db.read()
-    // If file empty, assign default data
-    db.data = db.data || defaultData
-    await db.write()
-}
-
-module.exports = { db, initDB }

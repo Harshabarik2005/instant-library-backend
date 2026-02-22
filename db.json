@@ -15,6 +15,14 @@
       "passwordHash": "$2b$10$8Zis3YwSksVLY80YIJHgcuE/SzyJzqZGrNhN0yA4oMViXNin0Y.v2",
       "role": "student",
       "phone": "8888888888"
+    },
+    {
+      "id": "hixcn-hrzuifCf8tJFmop",
+      "name": "Test User",
+      "email": "test3@test.com",
+      "passwordHash": "$2b$10$DamiQZGcGb3QumbVwVb4FegMRXuTNV9awIDhdbaXQrXKJaQ8RUZR6",
+      "role": "student",
+      "phone": null
     }
   ],
   "books": [

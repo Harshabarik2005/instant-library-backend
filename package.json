@@ -12,8 +12,10 @@
     "license": "MIT",
     "dependencies": {
         "@aws-sdk/client-dynamodb": "^3.994.0",
+        "@aws-sdk/client-s3": "^3.995.0",
         "@aws-sdk/client-sns": "^3.995.0",
         "@aws-sdk/lib-dynamodb": "^3.994.0",
+        "@aws-sdk/s3-request-presigner": "^3.995.0",
         "bcrypt": "^5.1.0",
         "body-parser": "^1.20.2",
         "cors": "^2.8.5",

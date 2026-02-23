@@ -7,6 +7,7 @@ const authRoutes = require('./routes/auth')
 const booksRoutes = require('./routes/books')
 const requestsRoutes = require('./routes/requests')
 const adminRoutes = require('./routes/admin')
+const uploadRoutes = require('./routes/uploads')
 
 const app = express()
 const PORT = process.env.PORT || 4000
@@ -18,6 +19,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/books', booksRoutes)
 app.use('/api/requests', requestsRoutes)
 app.use('/api/admin', adminRoutes)
+app.use('/api', uploadRoutes)
 
 app.get('/', (req, res) => res.send('Instant Library Backend is running'))
 

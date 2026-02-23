@@ -11,7 +11,8 @@ const { getBooks, addBook } = require('../services/booksService');
 // 📚 GET all books
 router.get('/', async (req, res) => {
     try {
-        const books = await getBooks();
+        const { search, author, subject, available } = req.query;
+        const books = await getBooks({ search, author, subject, available });
         res.json({ books });
     } catch (err) {
         console.error("Error fetching books:", err);

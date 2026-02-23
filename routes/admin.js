@@ -45,7 +45,7 @@ router.put("/requests/:id", authMiddleware, adminOnly, async (req, res) => {
 // ➕ Add book (Admin)
 router.post("/books", authMiddleware, adminOnly, async (req, res) => {
     try {
-        const { title, authors, subjects, isbn, copiesTotal } = req.body;
+        const { title, authors, subjects, isbn, copiesTotal, coverUrl, ebookKey } = req.body;
 
         if (!title || !copiesTotal) {
             return res.status(400).json({ error: "title and copiesTotal required" });
@@ -59,8 +59,14 @@ router.post("/books", authMiddleware, adminOnly, async (req, res) => {
             isbn: isbn || null,
             copiesTotal: Number(copiesTotal),
             copiesAvailable: Number(copiesTotal),
-            coverUrl: "",
-            ebookKey: null,
+
+            // S3 Integrations
+            // If the client provides a pre-signed upload URL resolution (coverUrl) or the raw object key (ebookKey), 
+            // we attach it directly. We fallback to empty strings or null to guarantee older frontends that simply 
+            // omit these new S3 fields don't accidentally wipe existing DB structures or cause runtime crashes.
+            coverUrl: coverUrl || "",
+            ebookKey: ebookKey || null,
+
             createdAt: new Date().toISOString(),
         };
 

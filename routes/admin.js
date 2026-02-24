@@ -6,14 +6,29 @@ const { nanoid } = require("nanoid");
 const { sendNotification } = require("../services/notificationService");
 // DynamoDB services
 const { getRequests, updateRequestStatus } = require("../services/requestsService");
-const { addBook } = require("../services/booksService");
+const { addBook, deleteBook, getBooks } = require("../services/booksService");
+const db = require("../db");
 
 
-// 📥 Get all requests (Admin)
+// 📥 Get all requests (Admin) – enriched with user name & book title
 router.get("/requests", authMiddleware, adminOnly, async (req, res) => {
     try {
-        const requests = await getRequests();
-        res.json({ requests });
+        const [requests, books] = await Promise.all([getRequests(), getBooks()]);
+        const users = db.get("users").value();
+
+        // Build lookup maps
+        const bookMap = {};
+        books.forEach(b => { bookMap[b.id] = b.title; });
+        const userMap = {};
+        users.forEach(u => { userMap[u.id] = u.name; });
+
+        const enriched = requests.map(r => ({
+            ...r,
+            bookTitle: bookMap[r.bookId] || "Unknown Book",
+            userName: userMap[r.userId] || "Unknown User",
+        }));
+
+        res.json({ requests: enriched });
     } catch (err) {
         console.error("Admin fetch requests error:", err);
         res.status(500).json({ error: "Failed to fetch requests" });
@@ -59,14 +74,8 @@ router.post("/books", authMiddleware, adminOnly, async (req, res) => {
             isbn: isbn || null,
             copiesTotal: Number(copiesTotal),
             copiesAvailable: Number(copiesTotal),
-
-            // S3 Integrations
-            // If the client provides a pre-signed upload URL resolution (coverUrl) or the raw object key (ebookKey), 
-            // we attach it directly. We fallback to empty strings or null to guarantee older frontends that simply 
-            // omit these new S3 fields don't accidentally wipe existing DB structures or cause runtime crashes.
             coverUrl: coverUrl || "",
             ebookKey: ebookKey || null,
-
             createdAt: new Date().toISOString(),
         };
 
@@ -76,6 +85,18 @@ router.post("/books", authMiddleware, adminOnly, async (req, res) => {
     } catch (err) {
         console.error("Admin add book error:", err);
         res.status(500).json({ error: "Failed to add book" });
+    }
+});
+
+
+// 🗑️ Delete book (Admin)
+router.delete("/books/:id", authMiddleware, adminOnly, async (req, res) => {
+    try {
+        await deleteBook(req.params.id);
+        res.json({ message: "Book deleted", bookId: req.params.id });
+    } catch (err) {
+        console.error("Admin delete book error:", err);
+        res.status(500).json({ error: "Failed to delete book" });
     }
 });
 

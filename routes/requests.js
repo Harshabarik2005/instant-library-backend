@@ -5,8 +5,9 @@ const { nanoid } = require("nanoid");
 const { authMiddleware } = require("../middleware/auth");
 const { sendNotification } = require("../services/notificationService");
 
-// ✅ DynamoDB service
+// DynamoDB services
 const { addRequest, getRequests } = require("../services/requestsService");
+const { getBooks } = require("../services/booksService");
 
 
 // ➕ Create request
@@ -35,13 +36,22 @@ router.post("/:bookId", authMiddleware, async (req, res) => {
 });
 
 
-// 📌 Get my requests
+// 📌 Get my requests – enriched with book title
 router.get("/", authMiddleware, async (req, res) => {
     try {
-        const requests = await getRequests();
+        const [requests, books] = await Promise.all([getRequests(), getBooks()]);
         const myRequests = requests.filter(r => r.userId === req.user.id);
 
-        res.json({ requests: myRequests });
+        // Build book title lookup
+        const bookMap = {};
+        books.forEach(b => { bookMap[b.id] = b.title; });
+
+        const enriched = myRequests.map(r => ({
+            ...r,
+            bookTitle: bookMap[r.bookId] || "Unknown Book",
+        }));
+
+        res.json({ requests: enriched });
     } catch (err) {
         console.error("Error fetching requests:", err);
         res.status(500).json({ error: "Failed to fetch requests" });

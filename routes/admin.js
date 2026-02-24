@@ -5,8 +5,8 @@ const { authMiddleware, adminOnly } = require("../middleware/auth");
 const { nanoid } = require("nanoid");
 const { sendNotification } = require("../services/notificationService");
 // DynamoDB services
-const { getRequests, updateRequestStatus } = require("../services/requestsService");
-const { addBook, deleteBook, getBooks } = require("../services/booksService");
+const { getRequests, getRequestById, updateRequestStatus } = require("../services/requestsService");
+const { addBook, deleteBook, decrementCopies, getBooks } = require("../services/booksService");
 const db = require("../db");
 
 
@@ -36,17 +36,25 @@ router.get("/requests", authMiddleware, adminOnly, async (req, res) => {
 });
 
 
-// ✅ Approve request
+// ✅ Approve / reject request
 router.put("/requests/:id", authMiddleware, adminOnly, async (req, res) => {
     try {
         const requestId = req.params.id;
         const { status } = req.body;
 
+        // If approving, decrement the book's available copies
+        if (status === "approved") {
+            const request = await getRequestById(requestId);
+            if (request && request.bookId) {
+                await decrementCopies(request.bookId);
+            }
+        }
+
         await updateRequestStatus(requestId, status);
 
         await sendNotification(
-            "Request Approved",
-            `Request ${requestId} has been approved`
+            "Request Updated",
+            `Request ${requestId} status changed to ${status}`
         );
 
         res.json({ message: "Request updated", requestId, status });

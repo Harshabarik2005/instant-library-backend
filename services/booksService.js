@@ -1,5 +1,5 @@
 const { docClient } = require("../aws");
-const { PutCommand, ScanCommand, DeleteCommand } = require("@aws-sdk/lib-dynamodb");
+const { PutCommand, ScanCommand, DeleteCommand, UpdateCommand } = require("@aws-sdk/lib-dynamodb");
 
 const TABLE = "Books";
 
@@ -17,6 +17,19 @@ async function deleteBook(id) {
         new DeleteCommand({
             TableName: TABLE,
             Key: { id },
+        })
+    );
+}
+
+// Decrement copiesAvailable by 1 (only if > 0)
+async function decrementCopies(bookId) {
+    await docClient.send(
+        new UpdateCommand({
+            TableName: TABLE,
+            Key: { id: bookId },
+            UpdateExpression: "SET copiesAvailable = copiesAvailable - :one",
+            ConditionExpression: "copiesAvailable > :zero",
+            ExpressionAttributeValues: { ":one": 1, ":zero": 0 },
         })
     );
 }
@@ -60,4 +73,4 @@ async function getBooks(filters = {}) {
     return data.Items || [];
 }
 
-module.exports = { addBook, deleteBook, getBooks };
+module.exports = { addBook, deleteBook, decrementCopies, getBooks };

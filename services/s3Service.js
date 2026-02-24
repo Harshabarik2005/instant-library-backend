@@ -47,7 +47,7 @@ async function generateDownloadUrl(fileName) {
     });
 
     // Valid for 60 seconds.
-    const downloadUrl = await getSignedUrl(s3Client, command, { expiresIn: 60 });
+    const downloadUrl = await getSignedUrl(s3Client, command, { expiresIn: 900 });
 
     return downloadUrl;
 }

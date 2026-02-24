@@ -41,36 +41,30 @@ async function getBooks(filters = {}) {
         TableName: TABLE,
     };
 
-    const filterExpressions = [];
-    const expressionAttributeValues = {};
-
-    if (search) {
-        filterExpressions.push("contains(title, :search)");
-        expressionAttributeValues[":search"] = search;
-    }
-
-    if (author) {
-        filterExpressions.push("contains(authors, :author)");
-        expressionAttributeValues[":author"] = author;
-    }
-
-    if (subject) {
-        filterExpressions.push("contains(subjects, :subject)");
-        expressionAttributeValues[":subject"] = subject;
-    }
-
+    // We can still filter 'available' at the DB level
     if (available === "true" || available === true) {
-        filterExpressions.push("copiesAvailable > :zero");
-        expressionAttributeValues[":zero"] = 0;
-    }
-
-    if (filterExpressions.length > 0) {
-        params.FilterExpression = filterExpressions.join(" AND ");
-        params.ExpressionAttributeValues = expressionAttributeValues;
+        params.FilterExpression = "copiesAvailable > :zero";
+        params.ExpressionAttributeValues = { ":zero": 0 };
     }
 
     const data = await docClient.send(new ScanCommand(params));
-    return data.Items || [];
+    let items = data.Items || [];
+
+    // Case-insensitive JS filtering for text fields
+    if (search) {
+        const s = search.toLowerCase();
+        items = items.filter(b => b.title?.toLowerCase().includes(s));
+    }
+    if (author) {
+        const a = author.toLowerCase();
+        items = items.filter(b => b.authors?.some(auth => auth.toLowerCase().includes(a)));
+    }
+    if (subject) {
+        const sub = subject.toLowerCase();
+        items = items.filter(b => b.subjects?.some(subj => subj.toLowerCase().includes(sub)));
+    }
+
+    return items;
 }
 
 module.exports = { addBook, deleteBook, decrementCopies, getBooks };

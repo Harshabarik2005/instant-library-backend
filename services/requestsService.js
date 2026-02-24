@@ -1,5 +1,5 @@
 const { docClient } = require("../aws");
-const { PutCommand, ScanCommand, UpdateCommand, GetCommand } = require("@aws-sdk/lib-dynamodb");
+const { PutCommand, ScanCommand, UpdateCommand, GetCommand, DeleteCommand } = require("@aws-sdk/lib-dynamodb");
 
 const TABLE = "Requests";
 
@@ -35,4 +35,19 @@ async function updateRequestStatus(id, status) {
     }));
 }
 
-module.exports = { addRequest, getRequests, getRequestById, updateRequestStatus };
+// Admin only: clear all requests
+async function clearRequests() {
+    const requests = await getRequests();
+    if (requests.length === 0) return;
+
+    // Delete items one by one (batch write is better for large DBs, but this is fine for this app)
+    const promises = requests.map(r =>
+        docClient.send(new DeleteCommand({
+            TableName: TABLE,
+            Key: { id: r.id }
+        }))
+    );
+    await Promise.all(promises);
+}
+
+module.exports = { addRequest, getRequests, getRequestById, updateRequestStatus, clearRequests };

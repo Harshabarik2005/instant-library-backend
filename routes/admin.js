@@ -5,7 +5,7 @@ const { authMiddleware, adminOnly } = require("../middleware/auth");
 const { nanoid } = require("nanoid");
 const { sendNotification } = require("../services/notificationService");
 // DynamoDB services
-const { getRequests, getRequestById, updateRequestStatus } = require("../services/requestsService");
+const { getRequests, getRequestById, updateRequestStatus, clearRequests } = require("../services/requestsService");
 const { addBook, deleteBook, decrementCopies, getBooks } = require("../services/booksService");
 const db = require("../db");
 
@@ -32,6 +32,17 @@ router.get("/requests", authMiddleware, adminOnly, async (req, res) => {
     } catch (err) {
         console.error("Admin fetch requests error:", err);
         res.status(500).json({ error: "Failed to fetch requests" });
+    }
+});
+
+// 🗑️ Clear all requests
+router.delete("/requests/clear", authMiddleware, adminOnly, async (req, res) => {
+    try {
+        await clearRequests();
+        res.json({ message: "Requests log cleared successfully" });
+    } catch (err) {
+        console.error("Admin clear requests error:", err);
+        res.status(500).json({ error: "Failed to clear requests" });
     }
 });
 
